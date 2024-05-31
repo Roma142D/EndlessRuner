@@ -20,7 +20,7 @@ namespace RomanDoliba.Platforms
             
         }
         
-        void Update()
+        private void Update()
         {
             MovePlatforms();
         }
@@ -33,6 +33,7 @@ namespace RomanDoliba.Platforms
             {
                 spawnPosition -= _platformBase._platformStartPoint.localPosition;
                 var platformSpawned = Instantiate(_platformBase, spawnPosition, Quaternion.identity, this.transform);
+                platformSpawned.SpawnObstacle();
                 spawnPosition = platformSpawned._platformEndPoint.position;
                 _platformsSpawned.Add(platformSpawned);
             }
@@ -45,8 +46,10 @@ namespace RomanDoliba.Platforms
             if (_platformsSpawned[0]._platformEndPoint.position.z < _startPoint.transform.position.z)
             {
                 var platformToMove = _platformsSpawned[0];
+                platformToMove.DestroyObstacle();
                 _platformsSpawned.RemoveAt(0);
                 platformToMove.transform.position = _platformsSpawned[_platformsSpawned.Count -1]._platformEndPoint.position - platformToMove._platformStartPoint.localPosition;
+                platformToMove.SpawnObstacle();
                 _platformsSpawned.Add(platformToMove);
             }
         }
