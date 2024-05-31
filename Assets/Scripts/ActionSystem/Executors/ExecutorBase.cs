@@ -7,9 +7,9 @@ namespace RomanDoliba.ActionSystem
         [SerializeField] private ConditionBase _condition;
         [SerializeField] private ActionBase[] _actions;
 
-        public void Execute()
+        public void Execute(object data = null)
         {
-            if (_condition == null || _condition.Check())
+            if (_condition == null || _condition.Check(data))
             {
                 foreach (var action in _actions)
                 {
