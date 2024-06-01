@@ -9,6 +9,8 @@ namespace RomanDoliba.Core
         [SerializeField] private Rigidbody _player;
         [SerializeField] private Transform[] _moveToPoints;
         [SerializeField] private float _turnSpeed;
+        [SerializeField] private float _groundCheckDistance;
+        [SerializeField] private float _jumpPower;
         private MyPlayerInput _playerInput;
         
         private int _playerIndexPosition;
@@ -20,6 +22,7 @@ namespace RomanDoliba.Core
             _playerInput = new MyPlayerInput();
             _playerInput.Player.MoveRight.performed += MoveRight;
             _playerInput.Player.MoveLeft.performed += MoveLeft;
+            _playerInput.Player.Jump.performed += Jump;
         }
 
         
@@ -52,6 +55,14 @@ namespace RomanDoliba.Core
                                    
             Debug.Log("MoveLeft");
         } 
+
+        private void Jump(InputAction.CallbackContext callback)
+        {
+             if (Physics.Raycast(_player.transform.position, Vector3.down, _groundCheckDistance))
+            {
+                _player.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+            }
+        }
 
         private void OnEnable()
         {

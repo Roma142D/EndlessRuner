@@ -11,13 +11,14 @@ namespace RomanDoliba.Platforms
         [SerializeField] private PlatformBase _platformBase;
         [SerializeField] private float _platformsSpeed;
         private List<PlatformBase> _platformsSpawned;
+        private float _platformAcceleration = 0;
 
 
         private void Awake()
         {
             _platformsSpawned = new List<PlatformBase>();
             SpawnOnAwake();
-            
+            Time.timeScale = 1;
         }
         
         private void Update()
@@ -41,7 +42,8 @@ namespace RomanDoliba.Platforms
 
         private void MovePlatforms()
         {
-            transform.Translate(-_platformsSpawned[0].transform.forward * _platformsSpeed * Time.deltaTime, Space.World);
+            transform.Translate(-_platformsSpawned[0].transform.forward * Time.deltaTime * (_platformsSpeed + _platformAcceleration/50), Space.World);
+            _platformAcceleration += Time.deltaTime * _platformsSpeed;
 
             if (_platformsSpawned[0]._platformEndPoint.position.z < _startPoint.transform.position.z)
             {

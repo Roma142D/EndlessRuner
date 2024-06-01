@@ -171,6 +171,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &294079427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8342681696322096702, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+  m_PrefabInstance: {fileID: 868320253934613873}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &506996652
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +671,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      propertyPath: _jumpPower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      propertyPath: _groundCheckDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
       propertyPath: _moveToPoints.Array.data[0]
       value: 
       objectReference: {fileID: 3210847122481950356}
@@ -728,7 +741,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8342681696322096702, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5373117726721045056}
   m_SourcePrefab: {fileID: 100100000, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
 --- !u!1 &2819792766825595882
 GameObject:
@@ -781,6 +797,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5524825770472610845, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
   m_PrefabInstance: {fileID: 868320253934613873}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &5373117726721045056
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294079427}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a4e6ee54a0cb26f4db3834d25164d3dc, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0de3fdcfa507dae4396b946f348a0354, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &6536224998489594903
 Transform:
   m_ObjectHideFlags: 0

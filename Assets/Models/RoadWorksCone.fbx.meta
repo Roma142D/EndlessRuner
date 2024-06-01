@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 6d8297f2acd898642a098ae9ed04f102
+guid: ae42e266538b13f449c7df1921501de5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: VCOL
+    second: {fileID: 2100000, guid: b414d8a51b255f2429def6a91cb2bb5e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -46,6 +46,15 @@ namespace RomanDoliba.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd66ab8e-9505-4765-b8f4-6b5086b0fc5a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -70,6 +79,28 @@ namespace RomanDoliba.Input
                     ""action"": ""MoveRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""179b3dd3-6a07-42aa-8872-0dd7637961c0"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d02ea48e-72b7-4ebe-a458-75b8d3cb77d3"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -80,6 +111,7 @@ namespace RomanDoliba.Input
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_MoveLeft = m_Player.FindAction("MoveLeft", throwIfNotFound: true);
             m_Player_MoveRight = m_Player.FindAction("MoveRight", throwIfNotFound: true);
+            m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -143,12 +175,14 @@ namespace RomanDoliba.Input
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_MoveLeft;
         private readonly InputAction m_Player_MoveRight;
+        private readonly InputAction m_Player_Jump;
         public struct PlayerActions
         {
             private @MyPlayerInput m_Wrapper;
             public PlayerActions(@MyPlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @MoveLeft => m_Wrapper.m_Player_MoveLeft;
             public InputAction @MoveRight => m_Wrapper.m_Player_MoveRight;
+            public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -164,6 +198,9 @@ namespace RomanDoliba.Input
                 @MoveRight.started += instance.OnMoveRight;
                 @MoveRight.performed += instance.OnMoveRight;
                 @MoveRight.canceled += instance.OnMoveRight;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -174,6 +211,9 @@ namespace RomanDoliba.Input
                 @MoveRight.started -= instance.OnMoveRight;
                 @MoveRight.performed -= instance.OnMoveRight;
                 @MoveRight.canceled -= instance.OnMoveRight;
+                @Jump.started -= instance.OnJump;
+                @Jump.performed -= instance.OnJump;
+                @Jump.canceled -= instance.OnJump;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -195,6 +235,7 @@ namespace RomanDoliba.Input
         {
             void OnMoveLeft(InputAction.CallbackContext context);
             void OnMoveRight(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
         }
     }
 }
