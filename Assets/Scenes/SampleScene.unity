@@ -675,6 +675,14 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      propertyPath: _turnSpeed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      propertyPath: _playerAnimator
+      value: 
+      objectReference: {fileID: 5373117726721045056}
+    - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
       propertyPath: _groundCheckDistance
       value: 1
       objectReference: {fileID: 0}
@@ -737,6 +745,10 @@ PrefabInstance:
     - target: {fileID: 8342681696322096702, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8951567600714134921, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      propertyPath: m_Drag
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

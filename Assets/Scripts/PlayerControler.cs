@@ -11,6 +11,7 @@ namespace RomanDoliba.Core
         [SerializeField] private float _turnSpeed;
         [SerializeField] private float _groundCheckDistance;
         [SerializeField] private float _jumpPower;
+        [SerializeField] private Animator _playerAnimator;
         private MyPlayerInput _playerInput;
         
         private int _playerIndexPosition;
@@ -35,7 +36,7 @@ namespace RomanDoliba.Core
             var currentPosition = _player.transform.position;
             var rightPosition = _moveToPoints[_playerIndexPosition + 1];
 
-            _player.transform.position = Vector3.Lerp(currentPosition, rightPosition.position, _turnSpeed);
+            _player.transform.position = Vector3.Lerp(currentPosition, rightPosition.position, _turnSpeed * Time.deltaTime);
             _playerIndexPosition += 1;
                                    
             Debug.Log("MoveRight");
@@ -50,7 +51,7 @@ namespace RomanDoliba.Core
             var currentPosition = _player.transform.position;
             var leftPosition = _moveToPoints[_playerIndexPosition - 1];
 
-            _player.transform.position = Vector3.Lerp(currentPosition, leftPosition.position, _turnSpeed);
+            _player.transform.position = Vector3.Lerp(currentPosition, leftPosition.position, _turnSpeed * Time.deltaTime);
             _playerIndexPosition -= 1;
                                    
             Debug.Log("MoveLeft");
@@ -61,6 +62,8 @@ namespace RomanDoliba.Core
              if (Physics.Raycast(_player.transform.position, Vector3.down, _groundCheckDistance))
             {
                 _player.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+                //_playerAnimator.SetBool("IsJumping", true);
+                _playerAnimator.SetTrigger("Jump");
             }
         }
 
