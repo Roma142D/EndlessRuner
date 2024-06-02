@@ -39,7 +39,7 @@ namespace RomanDoliba.Core
             _player.transform.position = Vector3.Lerp(currentPosition, rightPosition.position, _turnSpeed * Time.deltaTime);
             _playerIndexPosition += 1;
                                    
-            Debug.Log("MoveRight");
+            _playerAnimator.SetTrigger("RightTurn");
         } 
 
         private void MoveLeft(InputAction.CallbackContext callback)
@@ -54,7 +54,7 @@ namespace RomanDoliba.Core
             _player.transform.position = Vector3.Lerp(currentPosition, leftPosition.position, _turnSpeed * Time.deltaTime);
             _playerIndexPosition -= 1;
                                    
-            Debug.Log("MoveLeft");
+            _playerAnimator.SetTrigger("LeftTurn");
         } 
 
         private void Jump(InputAction.CallbackContext callback)
@@ -62,7 +62,6 @@ namespace RomanDoliba.Core
              if (Physics.Raycast(_player.transform.position, Vector3.down, _groundCheckDistance))
             {
                 _player.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
-                //_playerAnimator.SetBool("IsJumping", true);
                 _playerAnimator.SetTrigger("Jump");
             }
         }
