@@ -7,6 +7,7 @@ namespace RomanDoliba.Platforms
     public class PlatformGenerator : MonoBehaviour
     {
         [SerializeField] private Transform _startPoint;
+        [SerializeField] private Transform _mainCamera;
         [SerializeField] private int _platformsToPreSpawn;
         [SerializeField] private PlatformBase _platformBase;
         [SerializeField] private float _platformsSpeed;
@@ -45,7 +46,7 @@ namespace RomanDoliba.Platforms
             transform.Translate(-_platformsSpawned[0].transform.forward * Time.deltaTime * (_platformsSpeed + _platformAcceleration/50), Space.World);
             _platformAcceleration += Time.deltaTime * _platformsSpeed;
 
-            if (_platformsSpawned[0]._platformEndPoint.position.z < _startPoint.transform.position.z)
+            if (_platformsSpawned[0]._platformEndPoint.position.z < _mainCamera.transform.position.z)
             {
                 var platformToMove = _platformsSpawned[0];
                 platformToMove.DestroyObstacle();
