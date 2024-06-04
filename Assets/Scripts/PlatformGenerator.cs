@@ -9,7 +9,7 @@ namespace RomanDoliba.Platforms
         [SerializeField] private Transform _startPoint;
         [SerializeField] private Transform _mainCamera;
         [SerializeField] private int _platformsToPreSpawn;
-        [SerializeField] private PlatformBase _platformBase;
+        [SerializeField] private PlatformBase[] _roadsVariants;
         [SerializeField] private float _platformsSpeed;
         private List<PlatformBase> _platformsSpawned;
         private float _platformAcceleration = 0;
@@ -33,8 +33,9 @@ namespace RomanDoliba.Platforms
 
             for (int i = 0; i < _platformsToPreSpawn; i++)
             {
-                spawnPosition -= _platformBase._platformStartPoint.localPosition;
-                var platformSpawned = Instantiate(_platformBase, spawnPosition, Quaternion.identity, this.transform);
+                var randomRoad = _roadsVariants[Random.Range(0, _roadsVariants.Length)];
+                spawnPosition -= randomRoad._platformStartPoint.localPosition;
+                var platformSpawned = Instantiate(randomRoad, spawnPosition, Quaternion.identity, this.transform);
                 platformSpawned.SpawnObstacle();
                 spawnPosition = platformSpawned._platformEndPoint.position;
                 _platformsSpawned.Add(platformSpawned);

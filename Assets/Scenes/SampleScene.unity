@@ -155,7 +155,12 @@ MonoBehaviour:
   _startPoint: {fileID: 5373117726721045048}
   _mainCamera: {fileID: 157928865}
   _platformsToPreSpawn: 15
-  _platformBase: {fileID: 138514497856967747, guid: c70a34a05c24a404a84ee9ce7d6a5f2d, type: 3}
+  _roadsVariants:
+  - {fileID: 152650144979652971, guid: c8db35711cdffa8499a9658ed1d34c33, type: 3}
+  - {fileID: 708955056370333478, guid: 65a8bc61ff0673141a3fd1125a4cf64a, type: 3}
+  - {fileID: 7759523843097240097, guid: 998d3cf6a57a0d74aa604fa93c3823d1, type: 3}
+  - {fileID: 999303854044112268, guid: 2a10988f05a3c0f4f8a98d9a25c0495e, type: 3}
+  - {fileID: 1747715498260953496, guid: 7ff481a1940f15f45829eaca37f81dce, type: 3}
   _platformsSpeed: 5
 --- !u!4 &2791231
 Transform:
