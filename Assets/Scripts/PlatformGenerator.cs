@@ -44,7 +44,7 @@ namespace RomanDoliba.Platforms
 
         private void MovePlatforms()
         {
-            transform.Translate(-_platformsSpawned[0].transform.forward * Time.deltaTime * (_platformsSpeed + _platformAcceleration/50), Space.World);
+            transform.Translate(-_platformsSpawned[0].transform.forward * Time.deltaTime * (_platformsSpeed + _platformAcceleration/100), Space.World);
             _platformAcceleration += Time.deltaTime * _platformsSpeed;
 
             if (_platformsSpawned[0]._platformEndPoint.position.z < _mainCamera.transform.position.z)
