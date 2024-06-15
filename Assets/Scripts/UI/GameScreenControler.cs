@@ -1,22 +1,15 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace RomanDoliba.UI
 {
     public class GameScreenControler : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _scoreCounterText;
-        [SerializeField] private Button _pauseButton;
         private int _curentScore = 0;
         private float _changeableScore;
         private int _scoreMultiplier = 1;
 
-        private void Start()
-        {
-
-        }
         private void FixedUpdate()
         {
             _scoreCounterText.SetText(_curentScore.ToString());
