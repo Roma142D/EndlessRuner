@@ -22,10 +22,14 @@ namespace RomanDoliba.UI
             
             if (_lastScore > _firstBestScore)
             {
+                _secondBestScore = _firstBestScore;
+                PlayerPrefs.SetInt("SecondBestScore", _secondBestScore);
                 PlayerPrefs.SetInt("FirstBestScore", _lastScore);
             }
             else if (_lastScore > _secondBestScore && _lastScore < _firstBestScore)
             {
+                _thirdBestScore = _secondBestScore;
+                PlayerPrefs.SetInt("ThirdBestScore", _thirdBestScore);
                 PlayerPrefs.SetInt("SecondBestScore", _lastScore);
             }
             else if (_lastScore > _thirdBestScore && _lastScore < _secondBestScore)
