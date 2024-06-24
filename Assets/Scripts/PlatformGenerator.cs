@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using RomanDoliba.Data;
 using UnityEngine;
 
 namespace RomanDoliba.Platforms
@@ -13,20 +14,29 @@ namespace RomanDoliba.Platforms
         [SerializeField] private float _platformsSpeed;
         private List<PlatformBase> _platformsSpawned;
         private float _platformAcceleration = 0;
+        [Space]
+        [SerializeField] private PlatformsGroupData[] _platformsGroups;
 
 
         private void Awake()
         {
             _platformsSpawned = new List<PlatformBase>();
-            SpawnOnAwake();
+            SpawnGroup();
+            //SpawnOnAwake();
             Time.timeScale = 1;
         }
         
         private void Update()
         {
-            MovePlatforms();
+            //MovePlatforms();
         }
-
+        private void SpawnGroup()
+        {
+            var randomGroup = _platformsGroups[Random.Range(0,_platformsGroups.Length)];
+            var result = randomGroup.SpawnGroup(this.transform, _startPoint.position);
+            _platformsSpawned.AddRange(result.SpawnedPlatforms);
+        }
+        /*
         private void SpawnOnAwake()
         {
             var spawnPosition = _startPoint.position;
@@ -41,7 +51,7 @@ namespace RomanDoliba.Platforms
                 _platformsSpawned.Add(platformSpawned);
             }
         }
-
+        */
         private void MovePlatforms()
         {
             transform.Translate(-_platformsSpawned[0].transform.forward * Time.deltaTime * (_platformsSpeed + _platformAcceleration/100), Space.World);
