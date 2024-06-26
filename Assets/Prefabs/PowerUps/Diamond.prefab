@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 9183743993740727921}
   - component: {fileID: 4586280755472228737}
   - component: {fileID: -6292636958107985023}
-  - component: {fileID: -6715429006250226433}
   - component: {fileID: 3321237632713653938}
+  - component: {fileID: 1307769139398601571}
+  - component: {fileID: 3660519858817090615}
   m_Layer: 0
   m_Name: Diamond
   m_TagString: Untagged
@@ -52,7 +53,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -97,28 +98,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35973725a546e784f82867f94e26b13e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _condition: {fileID: 0}
-  _actions: []
+  _condition: {fileID: 3321237632713653938}
+  _actions:
+  - {fileID: 1307769139398601571}
+  - {fileID: 3660519858817090615}
   _onCollision: 0
-  _onTrigger: 0
+  _onTrigger: 1
   _state:
-    _enter: 0
+    _enter: 1
     _stay: 0
     _exit: 0
---- !u!114 &-6715429006250226433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 514382277087332241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0870463f6e8574095944ece69a1d6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _objectToDestroy: {fileID: 0}
-  _delay: 0
 --- !u!114 &3321237632713653938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +123,32 @@ MonoBehaviour:
   _collideWith:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &1307769139398601571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514382277087332241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c273d4ec1bf314da72d7c9ad8018ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectToSetActive: {fileID: 514382277087332241}
+--- !u!114 &3660519858817090615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514382277087332241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e68b9cfa7a3e4f4da65ed211142425d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _eventName: DiamondPicked
 --- !u!1001 &306185168392189001
 PrefabInstance:
   m_ObjectHideFlags: 0

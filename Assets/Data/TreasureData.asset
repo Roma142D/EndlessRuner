@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7624872e4e791a345a70fbe298f8e613, type: 3}
+  m_Name: TreasureData
+  m_EditorClassIdentifier: 
+  _treasures:
+  - TreasurePrefab: {fileID: 3010347660681833535, guid: 5ca1aa1387db8e447913b13268ba7d57, type: 3}
+    Name: Coin
+    Cost: 1
+  - TreasurePrefab: {fileID: 514382277087332241, guid: 9734c6e26bf7b85409e5aefe8b07a5d2, type: 3}
+    Name: Diamond
+    Cost: 10
