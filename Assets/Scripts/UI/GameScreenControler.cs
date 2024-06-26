@@ -1,4 +1,5 @@
 using RomanDoliba.ActionSystem;
+using RomanDoliba.Data;
 using TMPro;
 using UnityEngine;
 
@@ -16,8 +17,10 @@ namespace RomanDoliba.UI
         [SerializeField] private TextMeshProUGUI _coinsCounterText;
         [SerializeField] private string _coinsCollectEventName;
         [SerializeField] private string _diamondsCollectEventName;
-        [SerializeField] private int _coinsAmountPerEvent;
+        [SerializeField] private TreasuresData _treasuresData;
+        
         private int _curentCoinsValue;
+
 
         private void Awake()
         {
@@ -52,7 +55,7 @@ namespace RomanDoliba.UI
         {
             if (eventName == _coinsCollectEventName)
             {
-                _curentCoinsValue += _coinsAmountPerEvent;
+                _curentCoinsValue += _treasuresData.RefundCost("Coin");
                 PlayerPrefs.SetInt("CoinsCount", _curentCoinsValue);
                 PlayerPrefs.Save();
 
@@ -60,7 +63,7 @@ namespace RomanDoliba.UI
             }
             else if (eventName == _diamondsCollectEventName)
             {
-                _curentCoinsValue += _coinsAmountPerEvent * 10;
+                _curentCoinsValue += _treasuresData.RefundCost("Diamond");
                 PlayerPrefs.SetInt("CoinsCount", _curentCoinsValue);
                 PlayerPrefs.Save();
 

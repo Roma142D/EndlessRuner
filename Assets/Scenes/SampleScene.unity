@@ -1970,6 +1970,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1863143045}
     m_Modifications:
     - target: {fileID: 1048633882902867677, guid: 12bbd903ed3557143a185485b75fb7ba, type: 3}
+      propertyPath: _treasuresData
+      value: 
+      objectReference: {fileID: 11400000, guid: 01930c6d09298ea4997e7f1c7869a053, type: 2}
+    - target: {fileID: 1048633882902867677, guid: 12bbd903ed3557143a185485b75fb7ba, type: 3}
       propertyPath: _coinsCounterText
       value: 
       objectReference: {fileID: 506539496}

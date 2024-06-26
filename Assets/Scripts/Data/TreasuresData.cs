@@ -1,18 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TreasersData : MonoBehaviour
+namespace RomanDoliba.Data
 {
-    // Start is called before the first frame update
-    void Start()
+    [CreateAssetMenu(fileName = "TreasureData", menuName = "MyData/TreasureData", order = 2)]
+    public class TreasuresData : ScriptableObject
     {
-        
-    }
+        [SerializeField] private Currency[] _treasures;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public int RefundCost(string name)
+        {
+            var cost = 0;
+            foreach (var treasure in _treasures)
+            {
+                if (treasure.Name == name)
+                {
+                    cost = treasure.Cost;
+                }
+            }
+            return cost;
+        }
+
+        [System.Serializable]
+        public struct Currency
+        {
+            public GameObject TreasurePrefab;
+            public string Name;
+            public int Cost;
+        }
     }
 }
