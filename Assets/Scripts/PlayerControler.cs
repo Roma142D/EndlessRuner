@@ -34,9 +34,9 @@ namespace RomanDoliba.Core
                 _playerIndexPosition = 1;
             }
             var currentPosition = _player.transform.position;
-            var rightPosition = _moveToPoints[_playerIndexPosition + 1];
+            var rightPosition = new Vector3(_moveToPoints[_playerIndexPosition + 1].position.x, _player.position.y, _player.position.z);
 
-            _player.transform.position = Vector3.Lerp(currentPosition, rightPosition.position, _turnSpeed * Time.deltaTime);
+            _player.transform.position = Vector3.Lerp(currentPosition, rightPosition, _turnSpeed * Time.deltaTime);
             _playerIndexPosition += 1;
                                    
             _playerAnimator.SetTrigger("RightTurn");
@@ -49,9 +49,9 @@ namespace RomanDoliba.Core
                 _playerIndexPosition = 1;
             }
             var currentPosition = _player.transform.position;
-            var leftPosition = _moveToPoints[_playerIndexPosition - 1];
+            var leftPosition = new Vector3(_moveToPoints[_playerIndexPosition - 1].position.x, _player.position.y, _player.position.z);
 
-            _player.transform.position = Vector3.Lerp(currentPosition, leftPosition.position, _turnSpeed * Time.deltaTime);
+            _player.transform.position = Vector3.Lerp(currentPosition, leftPosition, _turnSpeed * Time.deltaTime);
             _playerIndexPosition -= 1;
                                    
             _playerAnimator.SetTrigger("LeftTurn");
