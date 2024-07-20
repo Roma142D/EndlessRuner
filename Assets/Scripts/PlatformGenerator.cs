@@ -10,6 +10,7 @@ namespace RomanDoliba.Platforms
         [SerializeField] private Transform _startPoint;
         [SerializeField] private Transform _mainCamera;
         [SerializeField] private float _platformsSpeed;
+        [SerializeField] private int _platformsToSpawn;
         private List<PlatformBase> _platformsSpawned;
         private float _platformAcceleration = 0;
         [Space]
@@ -30,26 +31,24 @@ namespace RomanDoliba.Platforms
         {
             MovePlatforms();
 
-            if (IsCanSpawnPlatforms())
+            if (IsCanRelocatePlatform())
             {
+                var platformToMove = _platformsSpawned[0];
+                _platformsSpawned.RemoveAt(0);
                 _lastPlatformSpawnedOnPosition = _platformsSpawned[_platformsSpawned.Count - 1]._platformEndPoint.position;
-                SpawnGroup();
-            }
-            
-            for (int i = _platformsSpawned.Count-1; i >=0; i--)
-            {
-                var platform = _platformsSpawned[i];
-                if (_platformsSpawned[i]._platformEndPoint.position.z < _mainCamera.transform.position.z)
-                {
-                    _platformsSpawned.Remove(platform);
-                    Destroy(platform.gameObject);
-                }
+                platformToMove.transform.position = _lastPlatformSpawnedOnPosition - platformToMove._platformStartPoint.localPosition;
+                platformToMove.ChangeObstaclePosition();
+                _platformsSpawned.Add(platformToMove);
             }
         }
         private void SpawnGroup()
         {
-            var result = _spawnPatern.SpawnNextGroup(_lastPlatformSpawnedOnPosition);
-            _platformsSpawned.AddRange(result.SpawnedPlatforms);
+            while (_platformsSpawned.Count <= _platformsToSpawn)
+            {
+                var result = _spawnPatern.SpawnNextGroup(_lastPlatformSpawnedOnPosition);
+                _platformsSpawned.AddRange(result.SpawnedPlatforms);   
+                _lastPlatformSpawnedOnPosition = _platformsSpawned[_platformsSpawned.Count - 1]._platformEndPoint.position;
+            }
         }
         
         private void MovePlatforms()
@@ -57,9 +56,9 @@ namespace RomanDoliba.Platforms
             transform.Translate(-_platformsSpawned[0].transform.forward * Time.deltaTime * (_platformsSpeed + _platformAcceleration/100), Space.World);
             _platformAcceleration += Time.deltaTime * _platformsSpeed;
         }
-        private bool IsCanSpawnPlatforms()
+        private bool IsCanRelocatePlatform()
         {
-            return _platformsSpawned[0]._platformEndPoint.position.z < _mainCamera.transform.position.z && _platformsSpawned.Count <= 15;
+            return _platformsSpawned[0]._platformEndPoint.position.z < _mainCamera.transform.position.z;
         }
     }
 }

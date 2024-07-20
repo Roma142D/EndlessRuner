@@ -17,6 +17,11 @@ namespace RomanDoliba.Platforms
             
             _spawnedObstacle = Instantiate(randomObstacle, randomPosition.position, Quaternion.identity, this.transform);
         }
+        public void ChangeObstaclePosition()
+        {
+            var randomPosition = _spawnPoints[Random.Range(0,_spawnPoints.Length)];
+            _spawnedObstacle.transform.position = randomPosition.position;
+        }
 
         public void DestroyObstacle()
         {
