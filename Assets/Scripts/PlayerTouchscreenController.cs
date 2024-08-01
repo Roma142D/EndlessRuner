@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using RomanDoliba.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace RomanDoliba.Core
 {
-    public class PlayerControler : MonoBehaviour
+    public class PlayerTouchscreenController : MonoBehaviour
     {
         [SerializeField] private Rigidbody _player;
         [SerializeField] private Transform[] _moveToPoints;
@@ -13,22 +15,45 @@ namespace RomanDoliba.Core
         [SerializeField] private float _groundCheckDistance;
         [SerializeField] private float _jumpPower;
         [SerializeField] private Animator _playerAnimator;
+        [SerializeField] private float _minSwipeLength;
         private MyPlayerInput _playerInput;
-        
         private int _playerIndexPosition;
-
+        private Vector2 _touchPosition;
+        private Vector2 _swipeVector;
+        
         private void Awake()
         {
-            _playerIndexPosition = 1;
-
             _playerInput = new MyPlayerInput();
-            _playerInput.Player.MoveRight.performed += MoveRight;
-            _playerInput.Player.MoveLeft.performed += MoveLeft;
-            _playerInput.Player.Jump.performed += Jump;
+            _playerInput.PlayerTouchscreen.Touch.started += OnTouchStarted;
+            _playerInput.PlayerTouchscreen.Touch.canceled += OnTouchCanceled;
         }
 
-        
-        private void MoveRight(InputAction.CallbackContext callback)
+        private void OnTouchStarted(InputAction.CallbackContext context)
+        {
+            _touchPosition = _playerInput.PlayerTouchscreen.Swipe.ReadValue<Vector2>();
+        }
+        private void OnTouchCanceled(InputAction.CallbackContext context)
+        {
+            var touchEndPosition = _playerInput.PlayerTouchscreen.Swipe.ReadValue<Vector2>();
+            _swipeVector = touchEndPosition - _touchPosition;
+            
+            if (Math.Abs(_swipeVector.x) > Math.Abs(_swipeVector.y))
+            {
+                if (touchEndPosition.x > _touchPosition.x)
+                {
+                    MoveRight();
+                }
+                else if (touchEndPosition.x < _touchPosition.x)
+                {
+                    MoveLeft();
+                }
+            }
+            else
+            {
+                Jump();
+            }
+        }
+        private void MoveRight()
         {
             if (_playerIndexPosition > 2)
             {
@@ -44,7 +69,7 @@ namespace RomanDoliba.Core
             _playerAnimator.SetTrigger("RightTurn");
         } 
 
-        private void MoveLeft(InputAction.CallbackContext callback)
+        private void MoveLeft()
         {
             if (_playerIndexPosition < 0)
             {
@@ -60,7 +85,7 @@ namespace RomanDoliba.Core
             _playerAnimator.SetTrigger("LeftTurn");
         } 
 
-        private void Jump(InputAction.CallbackContext callback)
+        private void Jump()
         {
              if (Physics.Raycast(_player.transform.position, Vector3.down, _groundCheckDistance))
             {

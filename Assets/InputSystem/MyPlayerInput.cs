@@ -103,6 +103,54 @@ namespace RomanDoliba.Input
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerTouchscreen"",
+            ""id"": ""c2e0c9be-8262-42ef-8c6c-f3313dd103d3"",
+            ""actions"": [
+                {
+                    ""name"": ""Swipe"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""cb4fe0d1-34b8-4373-98ca-6906c6965a40"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Touch"",
+                    ""type"": ""Button"",
+                    ""id"": ""21f3ecec-e7f9-489f-89ac-13a4f5035a1d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f1dea676-5095-458c-9f24-519537de7cd0"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Swipe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a2adce6-e826-47be-8c7e-eb69558a1491"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -112,6 +160,10 @@ namespace RomanDoliba.Input
             m_Player_MoveLeft = m_Player.FindAction("MoveLeft", throwIfNotFound: true);
             m_Player_MoveRight = m_Player.FindAction("MoveRight", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+            // PlayerTouchscreen
+            m_PlayerTouchscreen = asset.FindActionMap("PlayerTouchscreen", throwIfNotFound: true);
+            m_PlayerTouchscreen_Swipe = m_PlayerTouchscreen.FindAction("Swipe", throwIfNotFound: true);
+            m_PlayerTouchscreen_Touch = m_PlayerTouchscreen.FindAction("Touch", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -231,11 +283,70 @@ namespace RomanDoliba.Input
             }
         }
         public PlayerActions @Player => new PlayerActions(this);
+
+        // PlayerTouchscreen
+        private readonly InputActionMap m_PlayerTouchscreen;
+        private List<IPlayerTouchscreenActions> m_PlayerTouchscreenActionsCallbackInterfaces = new List<IPlayerTouchscreenActions>();
+        private readonly InputAction m_PlayerTouchscreen_Swipe;
+        private readonly InputAction m_PlayerTouchscreen_Touch;
+        public struct PlayerTouchscreenActions
+        {
+            private @MyPlayerInput m_Wrapper;
+            public PlayerTouchscreenActions(@MyPlayerInput wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Swipe => m_Wrapper.m_PlayerTouchscreen_Swipe;
+            public InputAction @Touch => m_Wrapper.m_PlayerTouchscreen_Touch;
+            public InputActionMap Get() { return m_Wrapper.m_PlayerTouchscreen; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(PlayerTouchscreenActions set) { return set.Get(); }
+            public void AddCallbacks(IPlayerTouchscreenActions instance)
+            {
+                if (instance == null || m_Wrapper.m_PlayerTouchscreenActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_PlayerTouchscreenActionsCallbackInterfaces.Add(instance);
+                @Swipe.started += instance.OnSwipe;
+                @Swipe.performed += instance.OnSwipe;
+                @Swipe.canceled += instance.OnSwipe;
+                @Touch.started += instance.OnTouch;
+                @Touch.performed += instance.OnTouch;
+                @Touch.canceled += instance.OnTouch;
+            }
+
+            private void UnregisterCallbacks(IPlayerTouchscreenActions instance)
+            {
+                @Swipe.started -= instance.OnSwipe;
+                @Swipe.performed -= instance.OnSwipe;
+                @Swipe.canceled -= instance.OnSwipe;
+                @Touch.started -= instance.OnTouch;
+                @Touch.performed -= instance.OnTouch;
+                @Touch.canceled -= instance.OnTouch;
+            }
+
+            public void RemoveCallbacks(IPlayerTouchscreenActions instance)
+            {
+                if (m_Wrapper.m_PlayerTouchscreenActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IPlayerTouchscreenActions instance)
+            {
+                foreach (var item in m_Wrapper.m_PlayerTouchscreenActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_PlayerTouchscreenActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public PlayerTouchscreenActions @PlayerTouchscreen => new PlayerTouchscreenActions(this);
         public interface IPlayerActions
         {
             void OnMoveLeft(InputAction.CallbackContext context);
             void OnMoveRight(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+        }
+        public interface IPlayerTouchscreenActions
+        {
+            void OnSwipe(InputAction.CallbackContext context);
+            void OnTouch(InputAction.CallbackContext context);
         }
     }
 }

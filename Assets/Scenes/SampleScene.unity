@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -154,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPoint: {fileID: 5373117726721045048}
   _mainCamera: {fileID: 157928865}
-  _platformsSpeed: 5
+  _platformsSpeed: 3
   _platformsToSpawn: 15
   _spawnPatern: {fileID: 11400000, guid: 08d471efc39aad54190595f29f8ad160, type: 2}
 --- !u!4 &2791231
@@ -578,6 +577,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneIndex: 0
+--- !u!1 &1635579294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8342681696322096702, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+  m_PrefabInstance: {fileID: 868320253934613873}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1759125672 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8944143763790539229, guid: fde71f781264f5942ab9598fea40f966, type: 3}
@@ -1275,6 +1279,14 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      propertyPath: _turnSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688256970247197148, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
       propertyPath: _moveToPoints.Array.data[0]
       value: 
       objectReference: {fileID: 3210847122481950356}
@@ -1493,7 +1505,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8342681696322096702, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5373117726721045050}
   m_SourcePrefab: {fileID: 100100000, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
 --- !u!1 &2819792766825595882
 GameObject:
@@ -1660,6 +1675,38 @@ PrefabInstance:
 --- !u!4 &5373117726721045048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5524825770472610845, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+  m_PrefabInstance: {fileID: 868320253934613873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5373117726721045050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635579294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d112ad92539be7d43adcb9263b3f39aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 5373117726721045052}
+  _moveToPoints:
+  - {fileID: 3210847122481950356}
+  - {fileID: 6536224998489594903}
+  - {fileID: 3349853941828999703}
+  _turnSpeed: 0.2
+  _groundCheckDistance: 0.5
+  _jumpPower: 4.5
+  _playerAnimator: {fileID: 5373117726721045051}
+  _minSwipeLength: 300
+--- !u!95 &5373117726721045051 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8598394441062078226, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
+  m_PrefabInstance: {fileID: 868320253934613873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &5373117726721045052 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 8951567600714134921, guid: a27c7fd84a382f0419c7c440f0ec4436, type: 3}
   m_PrefabInstance: {fileID: 868320253934613873}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5430515714788648720
