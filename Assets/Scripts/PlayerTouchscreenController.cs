@@ -23,6 +23,7 @@ namespace RomanDoliba.Core
         
         private void Awake()
         {
+            _playerIndexPosition = 1;
             _playerInput = new MyPlayerInput();
             _playerInput.PlayerTouchscreen.Touch.started += OnTouchStarted;
             _playerInput.PlayerTouchscreen.Touch.canceled += OnTouchCanceled;

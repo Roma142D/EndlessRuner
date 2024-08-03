@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3321237632713653938}
   - component: {fileID: 1307769139398601571}
   - component: {fileID: 3660519858817090615}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Diamond
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,6 +160,10 @@ PrefabInstance:
     - target: {fileID: 161874, guid: 294400a0ca294384084dfba56bdf4c9a, type: 3}
       propertyPath: m_Name
       value: Diamond Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 161874, guid: 294400a0ca294384084dfba56bdf4c9a, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 461874, guid: 294400a0ca294384084dfba56bdf4c9a, type: 3}
       propertyPath: m_LocalScale.x

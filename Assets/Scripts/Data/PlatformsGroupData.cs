@@ -26,6 +26,7 @@ namespace RomanDoliba.Data
 
                 var platformSpawned = Instantiate(_platforms[i], lastSpawnedPosition, Quaternion.identity, parent);
                 platformSpawned.SpawnObstacle();
+                platformSpawned.SpawnTreasures();
 
                 lastSpawnedPosition = platformSpawned._platformEndPoint.position;
 

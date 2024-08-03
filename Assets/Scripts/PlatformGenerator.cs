@@ -16,8 +16,7 @@ namespace RomanDoliba.Platforms
         [Space]
         [SerializeField] private PlatformsGenerationPatern _spawnPatern;
         private Vector3 _lastPlatformSpawnedOnPosition;
-
-
+        
         private void Awake()
         {
             _platformsSpawned = new List<PlatformBase>();
@@ -38,6 +37,7 @@ namespace RomanDoliba.Platforms
                 _lastPlatformSpawnedOnPosition = _platformsSpawned[_platformsSpawned.Count - 1]._platformEndPoint.position;
                 platformToMove.transform.position = _lastPlatformSpawnedOnPosition - platformToMove._platformStartPoint.localPosition;
                 platformToMove.ChangeObstaclePosition();
+                platformToMove.SpawnTreasures();
                 _platformsSpawned.Add(platformToMove);
             }
         }
