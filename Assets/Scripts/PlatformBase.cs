@@ -1,6 +1,7 @@
 using UnityEngine;
 using RomanDoliba.Data;
 using System.Collections.Generic;
+using RomanDoliba.PowerUp;
 
 namespace RomanDoliba.Platforms
 {
@@ -15,6 +16,10 @@ namespace RomanDoliba.Platforms
         [SerializeField] private CoinsGroup _treasures;
         [SerializeField] private Transform[] _treasuresSpawnPoints;
         private List<Transform> _spawnedTreasures;
+        [Space]
+        [SerializeField] private PowerUps _powerUps;
+        [SerializeField] private Transform[] _powerUpSpawnPoints;
+        private Transform _spawnedPowerUp;
 
         private void Awake()
         {
@@ -53,6 +58,20 @@ namespace RomanDoliba.Platforms
             {
                 var randomPosition = _treasuresSpawnPoints[Random.Range(0, _treasuresSpawnPoints.Length)];
                 _spawnedTreasures.AddRange(_treasures.SpawnCoins(randomPosition));
+            }
+        }
+        public void SpawnPowerUp(bool spawnOnAwake)
+        {
+            var randomPosition = _powerUpSpawnPoints[Random.Range(0, _powerUpSpawnPoints.Length)];
+            
+            if (_spawnedPowerUp == null && spawnOnAwake) 
+            {
+                _spawnedPowerUp = _powerUps.SpawnPowerUp(randomPosition);
+            }
+            else if (_spawnedPowerUp != null && !_spawnedPowerUp.gameObject.activeSelf)
+            {
+                _spawnedPowerUp.gameObject.SetActive(true);
+                _spawnedPowerUp.position = randomPosition.position;
             }
         }
 

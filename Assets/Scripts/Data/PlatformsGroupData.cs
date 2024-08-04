@@ -32,6 +32,11 @@ namespace RomanDoliba.Data
 
                 spawnedPlatforms.Add(platformSpawned);
             }
+            if (Random.Range(0, 3) == 1)
+            {
+                spawnedPlatforms[spawnedPlatforms.Count - 1].SpawnPowerUp(true);
+                Debug.Log("SpawnPowerUp");
+            }
             return new GroupSpawnResult(spawnedPlatforms, lastSpawnedPosition);
         }
 

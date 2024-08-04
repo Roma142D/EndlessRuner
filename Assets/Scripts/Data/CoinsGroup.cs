@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RomanDoliba.Data
@@ -19,10 +18,20 @@ namespace RomanDoliba.Data
 
             for (int i = 0; i < _treasuresAmountToSpawn; i++)
             {
-                var treasureSpawned = Instantiate(_coin, positionToSpawn, Quaternion.identity, spawnPoint);
-                spawnedTreasures.Add(treasureSpawned);
+                if (Random.Range(0, 10) == 5)
+                {
+                    var treasureSpawned = Instantiate(_diamond, positionToSpawn, Quaternion.identity, spawnPoint);
+                    spawnedTreasures.Add(treasureSpawned);
 
-                positionToSpawn.z -= 1f;
+                    positionToSpawn.z -= 1f;
+                }
+                else
+                {
+                    var treasureSpawned = Instantiate(_coin, positionToSpawn, Quaternion.identity, spawnPoint);
+                    spawnedTreasures.Add(treasureSpawned);
+
+                    positionToSpawn.z -= 1f;
+                }
             }
             return spawnedTreasures;
         }

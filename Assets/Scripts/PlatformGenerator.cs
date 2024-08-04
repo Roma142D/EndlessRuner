@@ -38,6 +38,7 @@ namespace RomanDoliba.Platforms
                 platformToMove.transform.position = _lastPlatformSpawnedOnPosition - platformToMove._platformStartPoint.localPosition;
                 platformToMove.ChangeObstaclePosition();
                 platformToMove.SpawnTreasures();
+                platformToMove.SpawnPowerUp(false);
                 _platformsSpawned.Add(platformToMove);
             }
         }
