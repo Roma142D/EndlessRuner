@@ -6,6 +6,18 @@ namespace RomanDoliba.Data
     public class TreasuresData : ScriptableObject
     {
         [SerializeField] private Currency[] _treasures;
+        
+        public static int GetCurrentCoinsValue()
+        {
+            return PlayerPrefs.GetInt("CoinsCount", 0);
+        }
+        public static void SpendCurrentCoinsValue(int value)
+        {
+            var curentCoinsValue = PlayerPrefs.GetInt("CoinsCount");
+            curentCoinsValue -= value;
+            PlayerPrefs.SetInt("CoinsCount", curentCoinsValue);
+            PlayerPrefs.Save();
+        } 
 
         public int RefundCost(string name)
         {

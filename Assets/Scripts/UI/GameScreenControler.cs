@@ -25,7 +25,7 @@ namespace RomanDoliba.UI
         private void Awake()
         {
             _curentScore = PlayerPrefs.GetInt("LastScore", 0);
-            _curentCoinsValue = PlayerPrefs.GetInt("CoinsCount", 0);
+            _curentCoinsValue = TreasuresData.GetCurrentCoinsValue();
 
             _coinsCounterText.SetText($"Coins: {_curentCoinsValue}");
             GlobalEventSender.OnEvent += OnColectEvent;
@@ -33,7 +33,6 @@ namespace RomanDoliba.UI
         private void FixedUpdate()
         {
             _scoreCounterText.SetText(_curentScore.ToString());
-            
             ChangingScore();
         }        
 
@@ -55,20 +54,31 @@ namespace RomanDoliba.UI
         {
             if (eventName == _coinsCollectEventName)
             {
+                _curentCoinsValue = TreasuresData.GetCurrentCoinsValue();
                 _curentCoinsValue += _treasuresData.RefundCost("Coin");
                 PlayerPrefs.SetInt("CoinsCount", _curentCoinsValue);
-                PlayerPrefs.Save();
-
+                
                 _coinsCounterText.SetText($"Coins: {_curentCoinsValue}");
             }
             else if (eventName == _diamondsCollectEventName)
             {
+                _curentCoinsValue = TreasuresData.GetCurrentCoinsValue();
                 _curentCoinsValue += _treasuresData.RefundCost("Diamond");
                 PlayerPrefs.SetInt("CoinsCount", _curentCoinsValue);
-                PlayerPrefs.Save();
-
+                
                 _coinsCounterText.SetText($"Coins: {_curentCoinsValue}");
             }
+            PlayerPrefs.Save();
+        }
+
+        private void OnEnable()
+        {
+            _curentCoinsValue = TreasuresData.GetCurrentCoinsValue();
+            GlobalEventSender.OnEvent += OnColectEvent;
+        }
+        private void OnDisable()
+        {
+            GlobalEventSender.OnEvent -= OnColectEvent;
         }
 
     }

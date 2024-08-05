@@ -9,6 +9,10 @@ namespace RomanDoliba.PowerUp
     {
         [SerializeField] private PowerUps _powerUps;
         [SerializeField] private Collider _playerCollider;
+        [SerializeField] private SkinnedMeshRenderer _playerRenderer;
+        [SerializeField] private Material _shieldMaterial;
+        [SerializeField] private Material _currentMaterial;
+        private Coroutine _powerUpRoutine;
 
         private void Awake()
         {
@@ -21,7 +25,8 @@ namespace RomanDoliba.PowerUp
             {
                 case "Shield":
                     _powerUps.ShieldToggle(_playerCollider, true);
-                    StartCoroutine(PowerUpCoroutine(_powerUps.ShieldDuration));
+                    _powerUpRoutine = StartCoroutine(PowerUpCoroutine(_powerUps.ShieldDuration, _shieldMaterial));
+                    
                     break;
                 
             }
@@ -29,12 +34,15 @@ namespace RomanDoliba.PowerUp
         private void PowerUpReset()
         {
             _powerUps.ShieldToggle(_playerCollider, false);
+            _playerRenderer.material = _currentMaterial;
+            _powerUpRoutine = null;
         }
 
-        private IEnumerator PowerUpCoroutine(float duration)
+        private IEnumerator PowerUpCoroutine(float duration, Material material)
         {
             while (duration > 0)
             {
+                _playerRenderer.material = material;
                 duration -= Time.deltaTime;
                 yield return null;
             }

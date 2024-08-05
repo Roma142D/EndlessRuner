@@ -4,17 +4,20 @@ namespace RomanDoliba.ActionSystem
 {
     public class SetUnsetActiveAction : ActionBase
     {
-        [SerializeField] private GameObject _objectToSetActive;
+        [SerializeField] private GameObject[] _objectsToSetActive;
 
         public override void Execute()
         {
-            if (!_objectToSetActive.activeSelf)
+            foreach (var objectToSetActive in _objectsToSetActive)
             {
-                _objectToSetActive.SetActive(true);
-            }
-            else
-            {
-                _objectToSetActive.SetActive(false);
+                if (!objectToSetActive.activeSelf)
+                {
+                    objectToSetActive.SetActive(true);
+                }
+                else
+                {
+                    objectToSetActive.SetActive(false);
+                }
             }
             
         }
