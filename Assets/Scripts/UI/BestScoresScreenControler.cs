@@ -1,3 +1,5 @@
+using System;
+using RomanDoliba.ActionSystem;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,7 +14,20 @@ namespace RomanDoliba.UI
         private int _secondBestScore;
         private int _thirdBestScore;
 
-        private void Update()
+        private void Awake()
+        {
+            GlobalEventSender.OnEvent += CheckScoreOnGameOver;
+        }
+
+        private void CheckScoreOnGameOver(string eventName)
+        {
+            if (eventName == "GameOver")
+            {
+                CheckScore();
+            }
+        }
+
+        private void CheckScore()
         {
             _lastScore = PlayerPrefs.GetInt("LastScore");
             
@@ -46,6 +61,11 @@ namespace RomanDoliba.UI
         private void AddScore(int position, int score)
         {
             _scoresTables[position].SetText(score.ToString());
+        }
+
+        private void OnDestroy()
+        {
+            GlobalEventSender.OnEvent -= CheckScoreOnGameOver;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace RomanDoliba.PowerUp
         [SerializeField] private Material _currentMaterial;
         private Coroutine _powerUpRoutine;
 
-        private void Awake()
+        private void Start()
         {
             GlobalEventSender.OnEvent += PowerUpActive;
            
