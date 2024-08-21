@@ -10,12 +10,14 @@ namespace RomanDoliba.Core
     public class PlayerTouchscreenController : MonoBehaviour
     {
         [SerializeField] private Rigidbody _player;
+        [SerializeField] private Transform _camera;
         [SerializeField] private Transform[] _moveToPoints;
         [SerializeField] private float _turnSpeed;
         [SerializeField] private float _groundCheckDistance;
         [SerializeField] private float _jumpPower;
         [SerializeField] private Animator _playerAnimator;
         [SerializeField] private float _minSwipeLength;
+        [SerializeField] private CapsuleCollider _playerCollider;
         private MyPlayerInput _playerInput;
         private int _playerIndexPosition;
         private Vector2 _touchPosition;
@@ -38,20 +40,30 @@ namespace RomanDoliba.Core
             var touchEndPosition = _playerInput.PlayerTouchscreen.Swipe.ReadValue<Vector2>();
             _swipeVector = touchEndPosition - _touchPosition;
             
-            if (Math.Abs(_swipeVector.x) > Math.Abs(_swipeVector.y))
+            if (_swipeVector.magnitude > _minSwipeLength)
             {
-                if (touchEndPosition.x > _touchPosition.x)
+                if (Math.Abs(_swipeVector.x) > Math.Abs(_swipeVector.y))
                 {
-                    MoveRight();
+                    if (touchEndPosition.x > _touchPosition.x)
+                    {
+                        MoveRight();
+                    }
+                    else if (touchEndPosition.x < _touchPosition.x)
+                    {
+                        MoveLeft();
+                    }
                 }
-                else if (touchEndPosition.x < _touchPosition.x)
+                else
                 {
-                    MoveLeft();
+                    if (touchEndPosition.y > _touchPosition.y)
+                    {
+                        Jump();
+                    }
+                    else if (touchEndPosition.y < _touchPosition.y)
+                    {
+                        Roll();
+                    }
                 }
-            }
-            else
-            {
-                Jump();
             }
         }
         private void MoveRight()
@@ -63,7 +75,7 @@ namespace RomanDoliba.Core
             var currentPosition = _player.transform.position;
             var rightPosition = new Vector3(_moveToPoints[_playerIndexPosition + 1].position.x, _player.position.y, _player.position.z);
 
-            StartCoroutine(MovePlayer(currentPosition, rightPosition, _turnSpeed));
+            StartCoroutine(MovePlayer(currentPosition, rightPosition, _turnSpeed, false));
             
             _playerIndexPosition += 1;
                                    
@@ -79,7 +91,7 @@ namespace RomanDoliba.Core
             var currentPosition = _player.transform.position;
             var leftPosition = new Vector3(_moveToPoints[_playerIndexPosition - 1].position.x, _player.position.y, _player.position.z);
 
-            StartCoroutine(MovePlayer(currentPosition, leftPosition, _turnSpeed));
+            StartCoroutine(MovePlayer(currentPosition, leftPosition, _turnSpeed, false));
             
             _playerIndexPosition -= 1;
                                    
@@ -88,28 +100,63 @@ namespace RomanDoliba.Core
 
         private void Jump()
         {
-             if (Physics.Raycast(_player.transform.position, Vector3.down, _groundCheckDistance))
+            var currentPosition = _player.transform.position;
+            var jumpPosition = new Vector3(_player.position.x, _player.position.y + _jumpPower, _player.position.z);
+            if (Physics.Raycast(_player.transform.position, Vector3.down, _groundCheckDistance))
             {
-                _player.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
                 _playerAnimator.SetTrigger("Jump");
+                _player.useGravity = false;
+                StartCoroutine(MovePlayer(currentPosition, jumpPosition, _turnSpeed * 2, true));
             }
         }
-        private IEnumerator MovePlayer(Vector3 currentPosition, Vector3 endPosition, float duration)
+        private void Roll()
+        {
+            var currentPosition = _player.transform.position;
+            var downPosition = new Vector3(_player.position.x, _player.position.y + _jumpPower, _player.position.z);
+            if (!Physics.Raycast(_player.transform.position, Vector3.down, _groundCheckDistance))
+            {
+                Physics.Raycast(_player.transform.position, Vector3.down, out RaycastHit ground);
+                StartCoroutine(MovePlayer(currentPosition, ground.point, _turnSpeed * 0.5f, false));
+            }
+            else
+            {
+                _playerAnimator.SetTrigger("Roll");
+                StartCoroutine(RollCoroutine());
+            }
+        }
+        private IEnumerator MovePlayer(Vector3 currentPosition, Vector3 endPosition, float duration, bool isJump)
         {
             var currentTime = 0f;
             var deltaTime = 0f;
             var endTime = 1f;
+            var cameraXPosition = _camera.position.x;
 
             while (deltaTime != duration)
             {
                 _player.transform.position = Vector3.Lerp(currentPosition, endPosition, currentTime);
+                cameraXPosition = Mathf.SmoothStep(_camera.position.x, endPosition.x, currentTime / 3);
+                _camera.position = new Vector3(cameraXPosition, _camera.position.y, _camera.position.z);
                 deltaTime = Mathf.Min(duration, deltaTime + Time.deltaTime);
                 currentTime = Mathf.Min(endTime, (endTime * deltaTime) / duration);
 
                 yield return new WaitForEndOfFrame();
             }
+            if (isJump)
+            {
+                _player.useGravity = true;
+            }
         }
-
+        private IEnumerator RollCoroutine()
+        {
+            var normalCenter = _playerCollider.center;
+            var normalHeight = _playerCollider.height;
+            _playerCollider.center = new Vector3(_playerCollider.center.x, 0, 0);
+            _playerCollider.height = 0f;
+            yield return new WaitForSeconds(1.2f);
+            _playerCollider.center = normalCenter;
+            _playerCollider.height = normalHeight;
+        }
+        
         private void OnEnable()
         {
             _playerInput.Enable();
