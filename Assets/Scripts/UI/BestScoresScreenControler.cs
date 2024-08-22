@@ -58,7 +58,7 @@ namespace RomanDoliba.UI
             AddScore(2, _thirdBestScore);
         }
 
-        private void AddScore(int position, int score)
+        protected void AddScore(int position, int score)
         {
             _scoresTables[position].SetText(score.ToString());
         }
